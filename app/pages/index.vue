@@ -85,7 +85,7 @@ watch(generatedPassword, (newPassword) => {
 
 // Watch for password length changes
 watch(() => passwordOptions.length, () => {
-  regeneratePassword()
+  generateWithAnimation()
 })
 
 // Watch for character type changes
@@ -95,7 +95,7 @@ watch([
   () => passwordOptions.includeNumbers,
   () => passwordOptions.includeSymbols
 ], () => {
-  regeneratePassword()
+  generateWithAnimation()
 })
 
 // Calculate security level based on selected character types and password length
@@ -198,53 +198,61 @@ const strengthColors = {
               </h3>
 
               <div class="grid grid-cols-2 gap-3">
-                <div class="flex items-center">
-                  <input
-                    id="uppercase"
-                    v-model="passwordOptions.includeUppercase"
-                    type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  >
-                  <label for="uppercase" class="ml-2 text-sm font-medium text-gray-700">
-                    Uppercase Letters (A-Z)
-                  </label>
-                </div>
+                <button
+                  @click="passwordOptions.includeUppercase = !passwordOptions.includeUppercase"
+                  class="p-3 rounded-lg border transition-all duration-200 text-left flex items-start"
+                  :class="passwordOptions.includeUppercase 
+                    ? 'bg-blue-100 border-blue-500 text-blue-700' 
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
+                >
+                  <span class="i-mdi-format-letter-case text-xl mr-2 mt-0.5"></span>
+                  <div>
+                    <div class="font-medium">Uppercase Letters (A-Z)</div>
+                    <div class="text-sm mt-1">Include ABC...XYZ</div>
+                  </div>
+                </button>
 
-                <div class="flex items-center">
-                  <input
-                    id="lowercase"
-                    v-model="passwordOptions.includeLowercase"
-                    type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  >
-                  <label for="lowercase" class="ml-2 text-sm font-medium text-gray-700">
-                    Lowercase Letters (a-z)
-                  </label>
-                </div>
+                <button
+                  @click="passwordOptions.includeLowercase = !passwordOptions.includeLowercase"
+                  class="p-3 rounded-lg border transition-all duration-200 text-left flex items-start"
+                  :class="passwordOptions.includeLowercase 
+                    ? 'bg-blue-100 border-blue-500 text-blue-700' 
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
+                >
+                  <span class="i-mdi-format-letter-case-lower text-xl mr-2 mt-0.5"></span>
+                  <div>
+                    <div class="font-medium">Lowercase Letters (a-z)</div>
+                    <div class="text-sm mt-1">Include abc...xyz</div>
+                  </div>
+                </button>
 
-                <div class="flex items-center">
-                  <input
-                    id="numbers"
-                    v-model="passwordOptions.includeNumbers"
-                    type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  >
-                  <label for="numbers" class="ml-2 text-sm font-medium text-gray-700">
-                    Numbers (0-9)
-                  </label>
-                </div>
+                <button
+                  @click="passwordOptions.includeNumbers = !passwordOptions.includeNumbers"
+                  class="p-3 rounded-lg border transition-all duration-200 text-left flex items-start"
+                  :class="passwordOptions.includeNumbers 
+                    ? 'bg-blue-100 border-blue-500 text-blue-700' 
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
+                >
+                  <span class="i-mdi-numeric text-xl mr-2 mt-0.5"></span>
+                  <div>
+                    <div class="font-medium">Numbers (0-9)</div>
+                    <div class="text-sm mt-1">Include 012...789</div>
+                  </div>
+                </button>
 
-                <div class="flex items-center">
-                  <input
-                    id="symbols"
-                    v-model="passwordOptions.includeSymbols"
-                    type="checkbox"
-                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                  >
-                  <label for="symbols" class="ml-2 text-sm font-medium text-gray-700">
-                    Symbols (!@#$%^&)
-                  </label>
-                </div>
+                <button
+                  @click="passwordOptions.includeSymbols = !passwordOptions.includeSymbols"
+                  class="p-3 rounded-lg border transition-all duration-200 text-left flex items-start"
+                  :class="passwordOptions.includeSymbols 
+                    ? 'bg-blue-100 border-blue-500 text-blue-700' 
+                    : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'"
+                >
+                  <span class="i-mdi-pound text-xl mr-2 mt-0.5"></span>
+                  <div>
+                    <div class="font-medium">Symbols (!@#$%^&)</div>
+                    <div class="text-sm mt-1">Include !@#...%^&</div>
+                  </div>
+                </button>
               </div>
             </div>
 
@@ -334,7 +342,7 @@ const strengthColors = {
                 </div>
                 
                 <div class="flex items-center justify-between">
-                  <span class="text-sm text-gray-600">Strength Level:</span>
+                  <span class="text-sm text-gray-600">Security Level:</span>
                   <span 
                     class="text-sm font-semibold px-2 py-1 rounded text-xs"
                     :class="securityLevelColor"
