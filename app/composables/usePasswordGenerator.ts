@@ -25,11 +25,11 @@ const CHARACTER_SETS = {
 
 // Default password options
 const DEFAULT_OPTIONS: PasswordOptions = {
-  length: 12,
+  length: 24,
   includeUppercase: true,
   includeLowercase: true,
   includeNumbers: true,
-  includeSymbols: false
+  includeSymbols: true
 }
 
 // Generate password based on options
