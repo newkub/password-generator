@@ -43,8 +43,8 @@ const generateWithAnimation = () => {
     displayPassword.value = tempPassword
     counter++
     
-    // After 15 quick changes, slow down
-    if (counter > 15) {
+    // After 10 quick changes, slow down (was 15 before)
+    if (counter > 10) {
       if (animationInterval.value) {
         clearInterval(animationInterval.value)
       }
@@ -58,7 +58,7 @@ const generateWithAnimation = () => {
         isRegenerating.value = false
       }, 100)
     }
-  }, 50)
+  }, 30) // Faster animation (was 50ms before)
 }
 
 // Simple regenerate without animation for reactive updates
@@ -182,7 +182,7 @@ const strengthColors = {
                   type="range"
                   min="4"
                   max="50"
-                  class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider accent-blue-600"
+                  class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer slider accent-blue-600 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600"
                 >
                 <div class="flex justify-between text-sm text-gray-500">
                   <span>4</span>
@@ -257,30 +257,7 @@ const strengthColors = {
             </div>
 
             <!-- Security Level Indicator -->
-            <div class="mb-4">
-              <div class="flex justify-between items-center mb-2">
-                <span class="text-sm font-medium text-gray-700">Security Level:</span>
-                <span 
-                  class="text-sm font-semibold px-2 py-1 rounded"
-                  :class="securityLevelColor"
-                >
-                  {{ securityLevelText }}
-                </span>
-              </div>
-              <div class="w-full bg-gray-200 rounded-full h-2">
-                <div 
-                  class="h-2 rounded-full transition-all duration-300"
-                  :class="{
-                    'bg-red-500': securityLevel === 'veryWeak',
-                    'bg-orange-500': securityLevel === 'weak',
-                    'bg-yellow-500': securityLevel === 'medium',
-                    'bg-blue-500': securityLevel === 'strong',
-                    'bg-green-500': securityLevel === 'veryStrong'
-                  }"
-                  :style="{ width: securityLevel === 'veryWeak' ? '20%' : securityLevel === 'weak' ? '40%' : securityLevel === 'medium' ? '60%' : securityLevel === 'strong' ? '80%' : '100%' }"
-                ></div>
-              </div>
-            </div>
+            <!-- Moved to the right panel as per user request -->
           </div>
 
           <!-- Output Panel - Right Side -->
